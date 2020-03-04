@@ -28,11 +28,11 @@ contract SimpleBank {
     event LogEnrolled(address indexed accountAddress);
 
     /* Add 2 arguments for this event, an accountAddress and an amount */
-    event LogDepositMade(address indexed recipient, fixed amount);
+    event LogDepositMade(address indexed accountAddress, uint amount);
 
     /* Create an event called LogWithdrawal */
     /* Add 3 arguments for this event, an accountAddress, withdrawAmount and a newBalance */
-    event LogWithdrawal(address indexed accountAddress, fixed withdrawAmount, fixed newBalance);
+    event LogWithdrawal(address indexed accountAddress, uint withdrawAmount, fixed newBalance);
 
     //
     // Functions
@@ -76,9 +76,13 @@ contract SimpleBank {
     // Use the appropriate global variables to get the transaction sender and value
     // Emit the appropriate event    
     // Users should be enrolled before they can make deposits
-    function deposit() public returns (uint) {
+    function deposit() public payable returns (uint) {
         /* Add the amount to the user's balance, call the event associated with a deposit,
           then return the balance of the user */
+          require(enrolled[msg.sender], 'user is not enrolled');
+          balances[msg.sender] += msg.value;
+          emit LogDepositMade(msg.sender, msg.value);
+          return balances[msg.sender];
     }
 
     /// @notice Withdraw ether from bank

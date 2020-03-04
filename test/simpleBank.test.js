@@ -42,18 +42,18 @@ contract('SimpleBank', function(accounts) {
     assert.equal(deposit.toString(), balance, 'deposit amount incorrect, check deposit method')
   })
 
-  // it("should log a deposit event when a deposit is made", async() => {
-  //   await instance.enroll({from: alice})
-  //   const result  = await instance.deposit({from: alice, value: deposit})
+  it("should log a deposit event when a deposit is made", async() => {
+    await instance.enroll({from: alice})
+    const result  = await instance.deposit({from: alice, value: deposit})
     
-  //   const expectedEventResult = {accountAddress: alice, amount: deposit}
+    const expectedEventResult = {accountAddress: alice, amount: deposit}
 
-  //   const logAccountAddress = result.logs[0].args.accountAddress
-  //   const logDepositAmount = result.logs[0].args.amount.toNumber()
+    const logAccountAddress = result.logs[0].args.accountAddress
+    const logDepositAmount = result.logs[0].args.amount.toNumber()
 
-  //   assert.equal(expectedEventResult.accountAddress, logAccountAddress, "LogDepositMade event accountAddress property not emitted, check deposit method");
-  //   assert.equal(expectedEventResult.amount, logDepositAmount, "LogDepositMade event amount property not emitted, check deposit method")
-  // })
+    assert.equal(expectedEventResult.accountAddress, logAccountAddress, "LogDepositMade event accountAddress property not emitted, check deposit method");
+    assert.equal(expectedEventResult.amount, logDepositAmount, "LogDepositMade event amount property not emitted, check deposit method")
+  })
 
   // it("should withdraw correct amount", async () => {
   //   const initialAmount = 0
