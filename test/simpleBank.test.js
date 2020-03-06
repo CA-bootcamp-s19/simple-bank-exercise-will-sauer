@@ -55,36 +55,36 @@ contract('SimpleBank', function(accounts) {
     assert.equal(expectedEventResult.amount, logDepositAmount, "LogDepositMade event amount property not emitted, check deposit method")
   })
 
-  // it("should withdraw correct amount", async () => {
-  //   const initialAmount = 0
-  //   await instance.enroll({from: alice})
-  //   await instance.deposit({from: alice, value: deposit})
-  //   await instance.withdraw(deposit, {from: alice})
-  //   const balance = await instance.getBalance({from: alice})
+  it("should withdraw correct amount", async () => {
+    const initialAmount = 0
+    await instance.enroll({from: alice})
+    await instance.deposit({from: alice, value: deposit})
+    await instance.withdraw(deposit, {from: alice})
+    const balance = await instance.getBalance({from: alice})
 
-  //   assert.equal(balance.toString(), initialAmount.toString(), 'balance incorrect after withdrawal, check withdraw method')
-  // })
+    assert.equal(balance.toString(), initialAmount.toString(), 'balance incorrect after withdrawal, check withdraw method')
+  })
 
-  // it("should not be able to withdraw more than has been deposited", async() => {
-  //   await instance.enroll({from: alice})
-  //   await instance.deposit({from: alice, value: deposit})
-  //   await catchRevert(instance.withdraw(deposit + 1, {from: alice}))
-  // })
+  it("should not be able to withdraw more than has been deposited", async() => {
+    await instance.enroll({from: alice})
+    await instance.deposit({from: alice, value: deposit})
+    await catchRevert(instance.withdraw(deposit + 1, {from: alice}))
+  })
 
-  // it("should emit the appropriate event when a withdrawal is made", async()=>{
-  //   const initialAmount = 0
-  //   await instance.enroll({from: alice})
-  //   await instance.deposit({from: alice, value: deposit})
-  //   var result = await instance.withdraw(deposit, {from: alice})
+  it("should emit the appropriate event when a withdrawal is made", async()=>{
+    const initialAmount = 0
+    await instance.enroll({from: alice})
+    await instance.deposit({from: alice, value: deposit})
+    var result = await instance.withdraw(deposit, {from: alice})
 
-  //   const accountAddress = result.logs[0].args.accountAddress
-  //   const newBalance = result.logs[0].args.newBalance.toNumber()
-  //   const withdrawAmount = result.logs[0].args.withdrawAmount.toNumber()
+    const accountAddress = result.logs[0].args.accountAddress
+    const newBalance = result.logs[0].args.newBalance.toNumber()
+    const withdrawAmount = result.logs[0].args.withdrawAmount.toNumber()
 
-  //   const expectedEventResult = {accountAddress: alice, newBalance: initialAmount, withdrawAmount: deposit}
+    const expectedEventResult = {accountAddress: alice, newBalance: initialAmount, withdrawAmount: deposit}
 
-  //   assert.equal(expectedEventResult.accountAddress, accountAddress, "LogWithdrawal event accountAddress property not emitted, check deposit method")
-  //   assert.equal(expectedEventResult.newBalance, newBalance, "LogWithdrawal event newBalance property not emitted, check deposit method")
-  //   assert.equal(expectedEventResult.withdrawAmount, withdrawAmount, "LogWithdrawal event withdrawalAmount property not emitted, check deposit method")
-  // })
+    assert.equal(expectedEventResult.accountAddress, accountAddress, "LogWithdrawal event accountAddress property not emitted, check deposit method")
+    assert.equal(expectedEventResult.newBalance, newBalance, "LogWithdrawal event newBalance property not emitted, check deposit method")
+    assert.equal(expectedEventResult.withdrawAmount, withdrawAmount, "LogWithdrawal event withdrawalAmount property not emitted, check deposit method")
+  })
 })
